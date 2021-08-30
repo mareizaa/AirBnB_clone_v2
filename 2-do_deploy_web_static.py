@@ -17,14 +17,17 @@ def do_deploy(archive_path):
     file = archive_path.split("/")[-1]
     name_file = file.split(".")[0]
 
-    path_f = "/data/web_static/releases/"
-    put(archive_path, '/tmp/')
-    run('mkdir -p {}{}/'.format(path_f, name_file))
-    run('tar -xzf /tmp/{} -C {}{}/'.format(file, path_f, name_file))
-    run('rm /tmp/{}'.format(file))
-    run('mv {0}{1}/web_static/* {0}{1}/'.format(path_f, name_file))
-    run('rm -rf {}{}/web_static'.format(path_f, name_file))
-    run('rm -rf /data/web_static/current')
-    run('ln -s {}{}/ /data/web_static/current'.format(path_f, name_file))
-    print("New version deployed")
-    return True
+    try:
+        path_f = "/data/web_static/releases/"
+        put(archive_path, '/tmp/')
+        run('mkdir -p {}{}/'.format(path_f, name_file))
+        run('tar -xzf /tmp/{} -C {}{}/'.format(file, path_f, name_file))
+        run('rm /tmp/{}'.format(file))
+        run('mv {0}{1}/web_static/* {0}{1}/'.format(path_f, name_file))
+        run('rm -rf {}{}/web_static'.format(path_f, name_file))
+        run('rm -rf /data/web_static/current')
+        run('ln -s {}{}/ /data/web_static/current'.format(path_f, name_file))
+        print("New version deployed")
+        return True
+    except:
+        return None
