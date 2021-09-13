@@ -3,7 +3,6 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from models.city import City
 from os import getenv
 
 
@@ -11,7 +10,7 @@ class State(BaseModel, Base):
     """ State class """
     __tablename__ = 'states'
     name = Column(String(128), nullable=False)
-    cities = relationship('City', backref='State', cascade='all, delete')
+    cities = relationship('City', backref='State')
 
     if getenv('HBNB_TYPE_STORAGE') != 'db':
         @property
@@ -19,6 +18,7 @@ class State(BaseModel, Base):
             """getter attribute cities that returns the list of
             City instances with state_id equals to the current State.id"""
             from models import storage
+            from models.city import City
             new = []
             new_dic = storage.all(City)
             for k, v in new_dic.items():
