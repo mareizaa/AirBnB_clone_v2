@@ -60,7 +60,7 @@ class BaseModel:
         dictionary['updated_at'] = self.updated_at.isoformat()
 
         try:
-            delattr(self, '_sa_instance_state')
+            del dictionary['_sa_instance_state']
         except:
             pass
         return dictionary
