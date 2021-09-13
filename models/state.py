@@ -21,7 +21,7 @@ class State(BaseModel, Base):
             from models import storage
             new = []
             new_dic = storage.all(City)
-            for city in new_dic.value():
-                if city.state_id == self.id:
+            for k, v in new_dic.items():
+                if v.state_id == self.id:
                     new.append(city)
             return new
